@@ -22,7 +22,7 @@ jobs:
 
     - name: Configure kubectl
       run: |
-        gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.ZONE }}
+        gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --region ${{ secrets.REGION }}
 
     - name: Deploy to GKE
       run: |
