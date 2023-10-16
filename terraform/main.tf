@@ -1,45 +1,26 @@
-resource "google_compute_network" "vpc" {
-  name                    = "mi-vpc"
-  auto_create_subnetworks = false
-  description             = "Mi VPC personalizada"
+module "networking" {
+  source          = "./modules/networking"
+  vpc_name        = var.vpc_name
+  vpc_description = var.vpc_description
+  subnets         = var.subnets
+  region          = var.region
+
+  labels                  = var.labels
 }
 
-resource "google_compute_subnetwork" "subnet_1" {
-  name          = "mi-subnet-1"
-  ip_cidr_range = "10.0.1.0/24"
-  region        = "us-central1"
-  network       = google_compute_network.vpc.self_link
+
+module "gke_cluster" {
+  source           = "./modules/gke_cluster"
+  cluster_name     = var.cluster_name
+  cluster_location = var.cluster_location
+  node_pool_name   = var.node_pool_name
+  node_count       = var.node_count
+  min_node_count   = var.min_node_count
+  max_node_count   = var.max_node_count
+  machine_type     = var.machine_type
+  vpc_name         = module.networking.vpc_name
+  subnetwork_name  = module.networking.subnet_names[0]
+
+  labels                  = var.labels
 }
 
-resource "google_compute_subnetwork" "subnet_2" {
-  name          = "mi-subnet-2"
-  ip_cidr_range = "10.0.2.0/24"
-  region        = "us-central1"
-  network       = google_compute_network.vpc.self_link
-}
-
-resource "google_container_cluster" "primary" {
-  name     = "mi-cluster"
-  location = "us-central1-a"
-  deletion_protection = false
-
-  node_pool {
-    name       = "default-pool"
-    node_count = 3 
-
-    autoscaling {
-      min_node_count = 3 
-      max_node_count = 6 
-    }
-
-    node_config {
-      machine_type = "n1-standard-1"
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ]
-    }
-  }
-
-  network    = google_compute_network.vpc.name
-  subnetwork = google_compute_subnetwork.subnet_1.name
-}

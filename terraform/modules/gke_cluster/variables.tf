@@ -3,41 +3,6 @@ variable "labels" {
   type        = map(string)
 }
 
-variable "atlas_public_key" {
-  description = "La clave pública para autenticación en MongoDB Atlas."
-  type        = string
-  sensitive   = true
-}
-
-variable "atlas_private_key" {
-  description = "La clave privada para autenticación en MongoDB Atlas."
-  type        = string
-  sensitive   = true
-}
-
-variable "atlas_org_id" {
-  description = "El ID de la organización en MongoDB Atlas."
-  type        = string
-}
-
-variable "vpc_name" {
-  description = "El nombre de la VPC"
-  type        = string
-}
-
-variable "vpc_description" {
-  description = "Descripción de la VPC"
-  type        = string
-}
-
-variable "region" {
-  type        = string
-}
-
-variable "subnets" {
-  type = list(string)
-}
-
 variable "cluster_name" {
   description = "Nombre del cluster GKE"
   type        = string
@@ -70,5 +35,15 @@ variable "max_node_count" {
 
 variable "machine_type" {
   description = "Tipo de máquina para los nodos"
+  type        = string
+}
+
+variable "vpc_name" {
+  description = "Nombre de la VPC"
+  type        = string
+}
+
+variable "subnetwork_name" {
+  description = "Nombre de la subred"
   type        = string
 }
