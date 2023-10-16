@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: gcp-test-container
-        image: alex919090/gcp_test:v5
+        image: alex919090/gcp_test:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
