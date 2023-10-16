@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gcp-test-deployment
+  labels:
+    app: gcp-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gcp-test
+  template:
+    metadata:
+      labels:
+        app: gcp-test
+    spec:
+      containers:
+      - name: gcp-test-container
+        image: alex919090/gcp_test:v5
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongo-credentials
+              key: MONGO_URI

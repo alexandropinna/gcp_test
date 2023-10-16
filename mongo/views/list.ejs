@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List</title>
+</head>
+<body>
+    <h1>Items</h1>
+
+    <form action="/add" method="post">
+        <input type="text" name="nombre" placeholder="Nombre del ítem">
+        <button type="submit">add ítem</button>
+    </form>
+
+    <ul>
+        <% items.forEach(item => { %>
+            <li>
+                <%= item.nombre %> 
+                <form action="/delete" method="post" style="display: inline;">
+                    <input type="hidden" name="nombre" value="<%= item.nombre %>">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+
+</body>
+</html>

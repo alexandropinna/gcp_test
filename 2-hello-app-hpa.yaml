@@ -1,0 +1,12 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gcp-test-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: gcp-test-deployment
+  minReplicas: 3
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 50
