@@ -1,12 +1,28 @@
+# The API version for HorizontalPodAutoscaler in Kubernetes
 apiVersion: autoscaling/v1
+
+# The kind of Kubernetes object being created
 kind: HorizontalPodAutoscaler
+
+# Metadata associated with this HorizontalPodAutoscaler
 metadata:
+  # Name of the HorizontalPodAutoscaler
   name: gcp-test-hpa
+
+# Specification for the HorizontalPodAutoscaler
 spec:
+  # Reference to the Deployment this HPA will scale
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: gcp-test-deployment
+  
+  # Minimum number of pod replicas the HPA should maintain
   minReplicas: 3
+  
+  # Maximum number of pod replicas the HPA can scale out to
   maxReplicas: 6
+  
+  # Target average CPU utilization (percentage) across all replicas
+  # When exceeded, the HPA will trigger a scale-out action
   targetCPUUtilizationPercentage: 50

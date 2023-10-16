@@ -1,28 +1,51 @@
+# The API version for Deployment in Kubernetes
 apiVersion: apps/v1
+
+# The kind of Kubernetes object being created
 kind: Deployment
+
+# Metadata associated with this Deployment
 metadata:
+  # Name of the Deployment
   name: gcp-test-deployment
+
+  # Labels attached to the Deployment for identification
   labels:
     app: gcp-test
+
+# Specification for the Deployment
 spec:
+  # Desired number of pod replicas
   replicas: 3
+
+  # Label selector for managing the pods under this Deployment
   selector:
     matchLabels:
       app: gcp-test
+
+  # The pod template used to create the replicas
   template:
+    # Metadata for the pod
     metadata:
+      # Labels attached to the pod for identification
       labels:
         app: gcp-test
+
+    # Specification for the pod
     spec:
+      # List of containers to run in the pod
       containers:
-      - name: gcp-test-container
-        image: alex919090/gcp_test:latest
-        imagePullPolicy: Always
+      - name: gcp-test-container # Name of the container
+        image: alex919090/gcp_test:v6 # Image to use for this container
+        imagePullPolicy: Always # Always pull the image, even if it's locally available
         ports:
-        - containerPort: 3000
+        - containerPort: 3000 # Port the container is listening on
+
+        # Environment variables for the container
         env:
-        - name: MONGO_URI
+        - name: MONGO_URI # Name of the environment variable
           valueFrom:
+            # Retrieve the value from a Secret named 'mongo-credentials' with a key 'MONGO_URI'
             secretKeyRef:
               name: mongo-credentials
               key: MONGO_URI

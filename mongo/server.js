@@ -1,34 +1,44 @@
+// Load environment variables from .env file
 require('dotenv').config();
 
+// Importing required modules
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const bodyParser = require('body-parser');
+
+// Initializing express app
 const app = express();
 
+// MongoDB connection string
 const uri = process.env.MONGO_URI;
 
+// Create a new MongoClient with specific server API configuration
 const client = new MongoClient(uri, {
   serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
+    version: ServerApiVersion.v1, // Set MongoDB server API version
+    strict: true, // Force server to run in strict mode
+    deprecationErrors: true, // Return error on deprecated features
   }
 });
 
-let db;
+let db; // Variable to store the connected database
 
+// Function to initialize MongoDB connection
 async function initMongo() {
     try {
         await client.connect();
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
-        db = client.db('gcpdb');
+        db = client.db('gcpdb'); // Selecting 'gcpdb' database
     } catch (err) {
         console.error(err);
     }
 }
 initMongo();
 
+// Setting view engine to EJS for template rendering
 app.set('view engine', 'ejs');
 
+// Endpoint to list all items from the 'gcpcollection' collection
 app.get('/list', async (req, res) => {
     try {
         const collection = db.collection('gcpcollection');
@@ -36,19 +46,14 @@ app.get('/list', async (req, res) => {
         res.render('list', { items: items });
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error al obtener los datos');
+        res.status(500).send('Error fetching data');
     }
 });
 
-app.listen(3000, () => {
-    console.log('Servidor escuchando en http://localhost:3000');
-});
-
-
-const bodyParser = require('body-parser');
-
+// Setting up body-parser middleware to parse POST request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Endpoint to add a new item to the 'gcpcollection' collection
 app.post('/add', async (req, res) => {
     try {
         const itemNombre = req.body.nombre;
@@ -57,11 +62,11 @@ app.post('/add', async (req, res) => {
         res.redirect('/list');
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error al agregar el ítem');
+        res.status(500).send('Error adding item');
     }
 });
 
-
+// Endpoint to delete an item from the 'gcpcollection' collection based on the name
 app.post('/delete', async (req, res) => {
     try {
         const itemNombre = req.body.nombre;
@@ -70,6 +75,11 @@ app.post('/delete', async (req, res) => {
         res.redirect('/list');
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error al eliminar el ítem');
+        res.status(500).send('Error deleting item');
     }
+});
+
+// Starting the express server on port 3000
+app.listen(3000, () => {
+    console.log('Server listening at http://localhost:3000');
 });

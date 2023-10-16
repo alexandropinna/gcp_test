@@ -1,11 +1,24 @@
+# The API version for Service in Kubernetes
 apiVersion: v1
+
+# The kind of Kubernetes object being created
 kind: Service
+
+# Metadata associated with this Service
 metadata:
+  # Name of the Service
   name: gcp-test-service
+
+# Specification for the Service
 spec:
+  # Type of the Service, LoadBalancer will provision an external IP to act as a load balancer for the service
   type: LoadBalancer
+  
+  # List of ports this service will expose
   ports:
-  - port: 80
-    targetPort: 3000
+  - port: 80 # The port that will be exposed by the service
+    targetPort: 3000 # The port on the pod that this service will send traffic to
+  
+  # Label selector to determine which pods will receive the traffic sent to this service
   selector:
     app: gcp-test

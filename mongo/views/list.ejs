@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Set the title for the web page -->
     <title>List</title>
 </head>
 <body>
+    <!-- Display a heading for the list of items -->
     <h1>Items</h1>
 
+    <!-- Form to add a new item -->
     <form action="/add" method="post">
+        <!-- Input field to accept the name of the item -->
         <input type="text" name="nombre" placeholder="item name">
+        <!-- Button to submit the form and add the item -->
         <button type="submit">add ítem</button>
     </form>
 
+    <!-- Unordered list to display all the items -->
     <ul>
+        <!-- Using EJS templating to loop through each item and display it -->
         <% items.forEach(item => { %>
             <li>
+                <!-- Display the name of the item -->
                 <%= item.nombre %> 
+                <!-- Inline form to delete the respective item -->
                 <form action="/delete" method="post" style="display: inline;">
+                    <!-- Hidden input to pass the name of the item to the server -->
                     <input type="hidden" name="nombre" value="<%= item.nombre %>">
+                    <!-- Button to submit the form and delete the item -->
                     <button type="submit">Delete</button>
                 </form>
             </li>
