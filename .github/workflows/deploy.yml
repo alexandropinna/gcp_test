@@ -40,6 +40,11 @@ jobs:
       run: |
         gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --region ${{ secrets.REGION }}
 
+    - name: Check current directory
+      run: |
+        pwd
+        ls -al
+
     - name: Deploy to GKE
       run: |
         kubectl apply -f 1-hello-app-deployment.yaml
