@@ -24,8 +24,10 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Setup gcloud CLI
       uses: google-github-actions/setup-gcloud@v0.2.1
       with:
@@ -40,12 +42,7 @@ jobs:
       run: |
         gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --region ${{ secrets.REGION }}
 
-    - name: Check current directory
+    - name: Deploy to GKE
       run: |
-        pwd
-        ls -al $GITHUB_WORKSPACE
-
-    # - name: Deploy to GKE
-    #   run: |
-    #     kubectl apply -f $GITHUB_WORKSPACE/1-hello-app-deployment.yaml
+        kubectl apply -f 1-hello-app-deployment.yaml
 
