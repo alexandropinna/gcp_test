@@ -1,7 +1,5 @@
 # gcp_test
 
-# README
-
 ## Project Overview
 
 This project aims to set up a web application using Express and MongoDB that is containerized with Docker and deployed on Google Kubernetes Engine (GKE) via Terraform.
@@ -60,19 +58,6 @@ This project aims to set up a web application using Express and MongoDB that is 
    kubectl apply -f 2-hello-app-hpa.yaml
    kubectl apply -f 3-hello-app-service.yaml
    ```
-
-## Commit Message
-
-```
-feat: Complete setup for Express app on GKE with Terraform
-
-- Added Dockerfile for Express app with MongoDB connection.
-- Added Kubernetes manifests for deployment, service, and HPA.
-- Added Terraform configurations for GKE cluster and networking.
-- Updated README with project overview and directory structure.
-
-This commit provides a complete setup for deploying an Express application on Google Kubernetes Engine using Terraform.
-```
 
 Note: Always ensure sensitive data (like API keys or secrets) are not committed to the repository and are managed securely.
 
