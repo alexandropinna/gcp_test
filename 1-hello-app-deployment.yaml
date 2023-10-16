@@ -36,7 +36,7 @@ spec:
       # List of containers to run in the pod
       containers:
       - name: gcp-test-container # Name of the container
-        image: alex919090/gcp_test:v6 # Image to use for this container
+        image: alex919090/gcp_test:v7 # Image to use for this container
         imagePullPolicy: Always # Always pull the image, even if it's locally available
         ports:
         - containerPort: 3000 # Port the container is listening on
