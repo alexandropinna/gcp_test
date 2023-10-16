@@ -47,4 +47,5 @@ jobs:
 
     - name: Deploy to GKE
       run: |
-        kubectl apply -f 1-hello-app-deployment.yaml
+        kubectl apply -f $GITHUB_WORKSPACE/1-hello-app-deployment.yaml
+
