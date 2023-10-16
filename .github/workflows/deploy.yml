@@ -43,9 +43,9 @@ jobs:
     - name: Check current directory
       run: |
         pwd
-        ls -al
+        ls -al $GITHUB_WORKSPACE
 
-    - name: Deploy to GKE
-      run: |
-        kubectl apply -f $GITHUB_WORKSPACE/1-hello-app-deployment.yaml
+    # - name: Deploy to GKE
+    #   run: |
+    #     kubectl apply -f $GITHUB_WORKSPACE/1-hello-app-deployment.yaml
 
